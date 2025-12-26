@@ -21,7 +21,7 @@ st.markdown("""
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
     }
     </style>
-    """, unsafe_allow_stdio=True)
+    """, unsafe_allow_html=True)
 
 st.title("🚀 Phòng Thí Nghiệm Vật Lí AI")
 st.write("Khám phá thế giới chuyển động thông qua trí tuệ nhân tạo.")
@@ -108,5 +108,6 @@ if "Bóng rổ" in mode:
         st.success("🎯 **AI NHẬN XÉT:** Cú ném hoàn hảo! Bóng đã đi vào rổ.")
     else:
         st.warning(f"⚡ **AI NHẬN XÉT:** Cần điều chỉnh lực hoặc góc. Bóng đang lệch rổ {error:.2f}m.")
+
 
 st.info("💡 **Mẹo khám phá:** Hãy thử đổi chiều cao ném sang 3.0m (ném từ tầng 2) để xem quỹ đạo thay đổi thế nào!")
