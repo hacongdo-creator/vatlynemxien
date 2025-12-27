@@ -2,11 +2,14 @@ import streamlit as st
 import numpy as np
 import plotly.graph_objects as go
 
-# 1. CẤU HÌNH TRANG
-st.set_page_config(page_title="Vật Lí AI - Thí nghiệm ảo", page_icon="🚀", layout="centered")
+# 1. CẤU HÌNH TRANG VÀ FONT CHỮ TIMES NEW ROMAN
+st.set_page_config(page_title="Vật Lí AI - Thí nghiệm chuẩn xác", page_icon="🚀", layout="centered")
 
 st.markdown("""
     <style>
+    html, body, [class*="css"], .stMarkdown, p, div, span, label {
+        font-family: "Times New Roman", Times, serif !important;
+    }
     .main { background-color: #0e1117; }
     .step-card {
         background-color: #1e2130; padding: 20px; border-radius: 15px;
@@ -16,10 +19,15 @@ st.markdown("""
         background-color: #00f2ff; color: #1e2130;
         padding: 2px 8px; border-radius: 50%; font-weight: bold; margin-right: 5px;
     }
+    h1, h2, h3 { font-family: "Times New Roman", Times, serif !important; }
     </style>
     """, unsafe_allow_html=True)
 
 st.title("🏀 Phòng Thí Nghiệm Vật Lí AI")
+
+# HIỂN THỊ HẰNG SỐ VẬT LÍ CỐ ĐỊNH
+G_CONST = 9.8
+st.caption(f"🌍 Tham số môi trường: Gia tốc trọng trường g = {G_CONST} m/s² (Bỏ qua lực cản không khí)")
 
 # 2. THANH ĐIỀU KHIỂN SIDEBAR
 st.sidebar.title("⚙️ Cấu hình thí nghiệm")
@@ -31,15 +39,18 @@ MODES = [
 ]
 selected_mode = st.sidebar.selectbox("🌟 Chọn loại chuyển động", MODES)
 
-h0, v0, angle, target_x, target_y = 0.0, 10.0, 45.0, 10.0, 3.05
+h0, v0, angle = 0.0, 12.0, 45.0
+target_x, target_y = 8.0, 3.05
 
 with st.sidebar.expander("📝 Nhập số liệu thí nghiệm", expanded=True):
-    v0 = st.number_input("⚡ Vận tốc đầu v0 (m/s)", 1.0, 50.0, 12.0, 0.5)
+    v0 = st.number_input("⚡ Vận tốc đầu v0 (m/s)", 0.0, 50.0, 12.0, 0.5)
     
     if selected_mode == MODES[0]: # 1. Thẳng đứng
         h0 = st.number_input("📏 Độ cao ban đầu (m)", 0.0, 100.0, 10.0, 1.0)
         direction = st.radio("Hướng ném", ["Ném lên trên", "Ném xuống dưới"])
         angle = 90.0 if direction == "Ném lên trên" else -90.0
+        if v0 == 0 and direction == "Ném xuống dưới":
+            st.info("💡 Trạng thái: **Rơi tự do**.")
     elif selected_mode == MODES[1]: # 2. Ném ngang
         h0 = st.number_input("📏 Độ cao ban đầu (m)", 0.5, 100.0, 15.0, 1.0)
         angle = 0.0
@@ -52,75 +63,79 @@ with st.sidebar.expander("📝 Nhập số liệu thí nghiệm", expanded=True)
         target_x = st.number_input("🚩 Khoảng cách rổ (m)", 1.0, 50.0, 8.0, 0.1)
         target_y = st.number_input("🥅 Chiều cao rổ (m)", 0.5, 5.0, 3.05, 0.05)
 
-# --- 3. HƯỚNG DẪN KHÁM PHÁ THEO BƯỚC (PHỤ THUỘC VÀO CHẾ ĐỘ) ---
+# --- 3. HƯỚNG DẪN KHÁM PHÁ (DYNAMIC) ---
 st.markdown("### 📖 Lộ trình khám phá dành cho học sinh")
 
 if selected_mode == MODES[0]:
     instruct = [
-        "<b>Quan sát gia tốc:</b> Chỉnh ném lên từ độ cao 10m. Nhận xét vận tốc thay đổi thế nào khi bóng đạt đỉnh.",
-        "<b>So sánh:</b> Ném lên và ném xuống cùng vận tốc v0. Chạm đất bên nào vận tốc lớn hơn?",
-        "<b>Nâng cao:</b> Rê chuột vào đường đỏ để xem giây thứ bao nhiêu thì vận tốc bằng 0."
+        f"<b>Kiểm chứng:</b> Theo dõi vận tốc đứng $v_y$ giảm {G_CONST} m/s sau mỗi giây.",
+        "<b>Rơi tự do:</b> Chỉnh hướng xuống và $v_0 = 0$. Soi bảng thông số để xem sự tăng tốc.",
+        "<b>Tư duy:</b> Tại đỉnh cao nhất, vận tốc tổng hợp có bằng 0 không?"
     ]
 elif selected_mode == MODES[1]:
     instruct = [
-        "<b>Thí nghiệm:</b> Giữ nguyên độ cao 15m, thay đổi vận tốc ném v0.",
-        "<b>Khám phá:</b> Quan sát <b>Thời gian rơi</b>. Tại sao v0 tăng mà thời gian rơi không đổi?",
-        "<b>Kết luận:</b> Tầm xa tỉ lệ thuận với vận tốc ném ngang v0."
+        "<b>Đặc điểm:</b> Vận tốc ngang $v_x$ không thay đổi suốt hành trình.",
+        "<b>Mối liên hệ:</b> Soi bảng thông số để thấy vận tốc đứng $v_y$ tăng đều do gia tốc $g$.",
+        "<b>Kết luận:</b> Thời gian rơi chỉ phụ thuộc vào độ cao $h_0$."
     ]
 elif selected_mode == MODES[2]:
     instruct = [
-        "<b>Tìm quy luật:</b> Thử ném với các góc 30°, 45°, 60°. Góc nào cho tầm xa lớn nhất?",
-        "<b>Đối xứng:</b> So sánh tầm xa khi ném góc 30° và 60°. Bạn có thấy điều gì đặc biệt không?",
-        "<b>Soi dữ liệu:</b> Kiểm tra vận tốc tại đỉnh quỹ đạo. Tại đó vận tốc có bằng 0 không?"
+        "<b>Phân tích:</b> Vận tốc tại đỉnh chỉ còn thành phần nằm ngang $v_x$.",
+        "<b>Thử thách:</b> Tìm góc ném để đạt tầm xa lớn nhất với $v_0$ cố định.",
+        "<b>Soi dữ liệu:</b> Thời gian bay tỉ lệ thuận với thành phần vận tốc $v_{0y}$."
     ]
 else: # Ném rổ
     instruct = [
-        "<b>Ước lượng:</b> Điều chỉnh v0 và Góc sao cho đường dự báo đỏ đi qua vành rổ.",
-        "<b>Thực hiện:</b> Nhấn <b>BẮT ĐẦU THÍ NGHIỆM</b> và quan sát bóng bay thực tế.",
-        "<b>Tư duy:</b> Nếu bóng rơi ngắn, bạn sẽ tăng vận tốc hay tăng góc ném? Hãy thử cả hai!"
+        "<b>Mục tiêu:</b> Kết hợp $v_0$ và Góc để đường dự báo đỏ đi qua tâm rổ.",
+        "<b>Vật lí:</b> Quan sát sự biến đổi vận tốc khi bóng chuẩn bị vào rổ.",
+        "<b>Thực hiện:</b> Nhấn nút để xem học sinh xanh thực hiện thí nghiệm thực tế."
     ]
 
-st.markdown(f"""
-<div class="step-card">
-    {"".join([f'<p><span class="step-number">{i+1}</span> {text}</p>' for i, text in enumerate(instruct)])}
-</div>
-""", unsafe_allow_html=True)
+st.markdown(f"""<div class="step-card">{"".join([f'<p><span class="step-number">{i+1}</span> {text}</p>' for i, text in enumerate(instruct)])}</div>""", unsafe_allow_html=True)
 
-# --- 4. TÍNH TOÁN VẬT LÝ THỰC TẾ (60 FPS) ---
-g = 9.81
+# --- 4. TÍNH TOÁN ĐỘNG HỌC ĐỒNG BỘ ---
 angle_rad = np.radians(angle)
 vx0 = v0 * np.cos(angle_rad)
 vy0 = v0 * np.sin(angle_rad)
 
-if selected_mode == MODES[0] and angle == -90:
-    t_flight = (-v0 + np.sqrt(v0**2 + 2*g*h0)) / g
-else:
-    discriminant = vy0**2 + 2 * g * h0
-    t_flight = (vy0 + np.sqrt(max(0, discriminant))) / g
+# 4.1. Tính Thời gian bay chuẩn xác
+discriminant = vy0**2 + 2 * G_CONST * h0
+t_flight = (vy0 + np.sqrt(max(0, discriminant))) / G_CONST if discriminant >= 0 else 0
 
+# 4.2. Tạo mảng dữ liệu (120 khung hình cho 60 FPS)
 t_steps = np.linspace(0, t_flight, num=120)
-x = vx0 * t_steps
-if selected_mode == MODES[0]: x = x + 1e-9 
-y = np.maximum(h0 + vy0 * t_steps - 0.5 * g * t_steps**2, 0)
 
-vx_t = np.full_like(t_steps, vx0)
-vy_t = vy0 - g * t_steps
-v_inst = np.sqrt(vx_t**2 + vy_t**2)
+# 4.3. Phương trình tọa độ đồng bộ thời gian
+x_coords = vx0 * t_steps
+if selected_mode == MODES[0]: x_coords = x_coords + 1e-9 
+y_coords = np.maximum(h0 + vy0 * t_steps - 0.5 * G_CONST * t_steps**2, 0)
+
+# 4.4. Phương trình vận tốc đồng bộ thời gian (VẬT LÍ CHUẨN)
+vx_inst = np.full_like(t_steps, vx0) # v_x(t) = constant
+vy_inst = vy0 - G_CONST * t_steps    # v_y(t) = v_y0 - g*t
+v_total = np.sqrt(vx_inst**2 + vy_inst**2) # v(t) = sqrt(vx^2 + vy^2)
 
 # --- 5. ĐỒ THỊ ---
 fig = go.Figure()
-custom_data = np.stack((v_inst, t_steps, vx_t, vy_t), axis=-1)
+custom_data = np.stack((v_total, t_steps, vx_inst, vy_inst), axis=-1)
 
-# 
+# Lớp Dự báo (Hover thông tin chuẩn)
 fig.add_trace(go.Scatter(
-    x=x, y=y, mode='lines', name='Dự báo', 
+    x=x_coords, y=y_coords, mode='lines', name='Quỹ đạo dự báo', 
     line=dict(color='#FF4B4B', width=2, dash='dash'),
     customdata=custom_data,
-    hovertemplate="<b>Tầm xa:</b> %{x:.2f} m<br><b>Độ cao:</b> %{y:.2f} m<br><b>Vận tốc:</b> %{customdata[0]:.2f} m/s<br><b>Thời gian:</b> %{customdata[1]:.2f} s<extra></extra>"
+    hovertemplate=(
+        "<b>Thời gian:</b> %{customdata[1]:.2f} s<br>" +
+        "<b>Vận tốc tổng:</b> %{customdata[0]:.2f} m/s<br>" +
+        "<i>- v_ngang: %{customdata[2]:.2f} m/s</i><br>" +
+        "<i>- v_đứng: %{customdata[3]:.2f} m/s</i><br>" +
+        "<b>Tầm xa:</b> %{x:.2f} m | <b>Độ cao:</b> %{y:.2f} m<extra></extra>"
+    )
 ))
 
-fig.add_trace(go.Scatter(x=[x[0]], y=[y[0]], mode='lines', name='Thực tế', line=dict(color='#00f2ff', width=4), hoverinfo='skip'))
-fig.add_trace(go.Scatter(x=[x[0]], y=[y[0]], mode='markers', name='Bóng', marker=dict(color='#FF6600', size=16, line=dict(color='white', width=1)), hoverinfo='skip'))
+# Lớp Chuyển động thực tế
+fig.add_trace(go.Scatter(x=[x_coords[0]], y=[y_coords[0]], mode='lines', name='Đã bay', line=dict(color='#00f2ff', width=4), hoverinfo='skip'))
+fig.add_trace(go.Scatter(x=[x_coords[0]], y=[y_coords[0]], mode='markers', name='Bóng', marker=dict(color='#FF6600', size=16, line=dict(color='white', width=1)), hoverinfo='skip'))
 
 # CHỈ VẼ NGƯỜI VÀ RỔ Ở CHẾ ĐỘ NÉM RỔ
 if selected_mode == MODES[3]:
@@ -132,8 +147,9 @@ if selected_mode == MODES[3]:
     fig.add_trace(go.Scatter(x=[target_x], y=[target_y], mode='markers', marker=dict(size=20, color='red', symbol='circle-open', line=dict(width=3)), hoverinfo='none'))
 
 fig.update_layout(
-    xaxis=dict(range=[-1, max(x) + 5], title="Tầm xa (m)", gridcolor='#333'),
-    yaxis=dict(range=[-0.5, max(y) + 5], title="Độ cao (m)", gridcolor='#333'),
+    font=dict(family="Times New Roman", size=14),
+    xaxis=dict(range=[-1, max(x_coords) + 5], title="Tầm xa (m)", gridcolor='#333'),
+    yaxis=dict(range=[-0.5, max(y_coords) + 5], title="Độ cao (m)", gridcolor='#333'),
     template="plotly_dark", height=500, margin=dict(l=20, r=20, t=20, b=20),
     updatemenus=[{
         "type": "buttons", "showactive": False, "x": 0.5, "y": -0.15, "xanchor": "center",
@@ -142,20 +158,19 @@ fig.update_layout(
     }]
 )
 
-fig.frames = [go.Frame(data=[go.Scatter(x=x, y=y), go.Scatter(x=x[:i+1], y=y[:i+1]), go.Scatter(x=[x[i]], y=[y[i]])]) for i in range(len(t_steps))]
+fig.frames = [go.Frame(data=[go.Scatter(x=x_coords, y=y_coords), go.Scatter(x=x_coords[:i+1], y=y_coords[:i+1]), go.Scatter(x=[x_coords[i]], y=[y_coords[i]])]) for i in range(len(t_steps))]
 
 st.plotly_chart(fig, use_container_width=True)
-st.info("💡 **Gợi ý:** Rê chuột hoặc chạm vào đường nét đứt để SOI thông số vận tốc và thời gian tại điểm đó.")
 
-# 6. KẾT QUẢ
+# 6. KẾT QUẢ KHOA HỌC
 st.markdown("---")
 c1, c2, c3 = st.columns(3)
-c1.metric("📏 Tầm xa tối đa", f"{max(x):.2f} m")
-c2.metric("🔝 Độ cao cực đại", f"{max(y):.2f} m")
-c3.metric("⏱️ Tổng thời gian", f"{t_flight:.2f} s")
+c1.metric("📏 Tầm xa tối đa", f"{max(x_coords):.2f} m")
+c2.metric("🔝 Độ cao cực đại", f"{max(y_coords):.2f} m")
+c3.metric("⏱️ Tổng thời gian bay", f"{t_flight:.2f} s")
 
 if selected_mode == MODES[3]:
-    idx = (np.abs(x - target_x)).argmin()
-    if abs(y[idx] - target_y) < 0.4:
+    idx = (np.abs(x_coords - target_x)).argmin()
+    if abs(y_coords[idx] - target_y) < 0.4:
         st.balloons()
-        st.success("🎯 TUYỆT VỜI! Bóng đã vào rổ.")
+        st.success("🎯 TUYỆT VỜI! Bóng trúng đích.")
