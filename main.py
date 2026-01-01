@@ -70,19 +70,19 @@ if selected_mode == MODES[0]:
     ]
 elif selected_mode == MODES[1]:
     instruct = [
-        "<b>Đặc điểm:</b> Vận tốc ngang $v_x$ không thay đổi suốt hành trình.",
-        "<b>Mối liên hệ:</b> Soi bảng thông số để thấy vận tốc đứng $v_y$ tăng đều do gia tốc $g$.",
-        "<b>Kết luận:</b> Thời gian rơi chỉ phụ thuộc vào độ cao $h_0$."
+        "<b>Đặc điểm:</b> Vận tốc ngang v_x không thay đổi suốt hành trình.",
+        "<b>Mối liên hệ:</b> Soi bảng thông số để thấy vận tốc đứng v_y tăng đều do gia tốc g.",
+        "<b>Kết luận:</b> Thời gian rơi chỉ phụ thuộc vào độ cao h0."
     ]
 elif selected_mode == MODES[2]:
     instruct = [
-        "<b>Phân tích:</b> Vận tốc tại đỉnh chỉ còn thành phần nằm ngang $v_x$.",
-        "<b>Thử thách:</b> Tìm góc ném để đạt tầm xa lớn nhất với $v_0$ cố định.",
+        "<b>Phân tích:</b> Vận tốc tại đỉnh chỉ còn thành phần nằm ngang v_x.",
+        "<b>Thử thách:</b> Tìm góc ném để đạt tầm xa lớn nhất với v0 cố định.",
         "<b>Soi dữ liệu:</b> Thời gian bay tỉ lệ thuận với thành phần vận tốc ban đầu phương đứng."
     ]
 else: 
     instruct = [
-        "<b>Mục tiêu:</b> Kết hợp $v_0$ và Góc để đường dự báo đỏ đi qua tâm rổ.",
+        "<b>Mục tiêu:</b> Kết hợp v0 và Góc để đường dự báo đỏ đi qua tâm rổ.",
         "<b>Vật lí:</b> Quan sát sự biến đổi vận tốc tổng hợp khi bóng bay gần đến đích.",
         "<b>Thực hiện:</b> Nhấn nút để xem nhân vật xanh thực hiện mô phỏng thực tế."
     ]
@@ -168,3 +168,4 @@ if selected_mode == MODES[3]:
     if abs(y_coords[idx] - target_y) < 0.4:
         st.balloons()
         st.success("🎯 TUYỆT VỜI! Bóng trúng đích.")
+
