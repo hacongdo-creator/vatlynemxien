@@ -63,33 +63,25 @@ with st.sidebar.expander("📝 Nhập số liệu thí nghiệm", expanded=True)
 st.markdown("### 📖 Lộ trình khám phá dành cho học sinh")
 
 if selected_mode == MODES[0]:
-    instruct = [
-        f"**Kiểm chứng:** Theo dõi vận tốc đứng $v_y$ giảm {G_CONST} $m/s^2$ sau mỗi giây.",
-        f"**Rơi tự do:** Chỉnh hướng xuống và $v_0 = 0$. Quan sát sự tăng tốc dưới tác động của $g = {G_CONST}$ $m/s^2$.",
-        "**Tư duy:** Tại đỉnh cao nhất, vận tốc đứng $v_y$ có bằng 0 không?"
-    ]
+    c1, c2, c3 = st.container(), st.container(), st.container()
+    with c1:
+        st.markdown(f'<div class="step-card"><span class="step-number">1</span> <b>Kiểm chứng:</b> Theo dõi vận tốc đứng $v_y$ giảm {G_CONST} $m/s^2$ sau mỗi giây.</div>', unsafe_allow_html=True)
+    with c2:
+        st.markdown(f'<div class="step-card"><span class="step-number">2</span> <b>Rơi tự do:</b> Chỉnh hướng xuống và $v_0 = 0$. Quan sát sự tăng tốc dưới tác động của $g = {G_CONST}$ $m/s^2$.</div>', unsafe_allow_html=True)
+    with c3:
+        st.markdown(f'<div class="step-card"><span class="step-number">3</span> <b>Tư duy:</b> Tại đỉnh cao nhất, vận tốc đứng $v_y$ có bằng 0 không?</div>', unsafe_allow_html=True)
 elif selected_mode == MODES[1]:
-    instruct = [
-        "**Đặc điểm:** Vận tốc ngang $v_x$ không thay đổi suốt hành trình.",
-        f"**Mối liên hệ:** Soi bảng thông số để thấy vận tốc đứng $v_y$ tăng đều do gia tốc $g = {G_CONST}$ $m/s^2$.",
-        "**Kết luận:** Thời gian rơi chỉ phụ thuộc vào độ cao $h_0$."
-    ]
+    st.markdown(f'<div class="step-card"><span class="step-number">1</span> <b>Đặc điểm:</b> Vận tốc ngang $v_x$ không thay đổi suốt hành trình.</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="step-card"><span class="step-number">2</span> <b>Mối liên hệ:</b> Soi bảng thông số để thấy vận tốc đứng $v_y$ tăng đều do gia tốc $g = {G_CONST}$ $m/s^2$.</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="step-card"><span class="step-number">3</span> <b>Kết luận:</b> Thời gian rơi chỉ phụ thuộc vào độ cao $h_0$.</div>', unsafe_allow_html=True)
 elif selected_mode == MODES[2]:
-    instruct = [
-        "**Phân tích:** Vận tốc tại đỉnh chỉ còn thành phần nằm ngang $v_x$.",
-        "**Thử thách:** Tìm góc ném để đạt tầm xa lớn nhất với $v_0$ cố định.",
-        "**Soi dữ liệu:** Thời gian bay tỉ lệ thuận với thành phần vận tốc ban đầu phương đứng $v_{0y}$."
-    ]
+    st.markdown(f'<div class="step-card"><span class="step-number">1</span> <b>Phân tích:</b> Vận tốc tại đỉnh chỉ còn thành phần nằm ngang $v_x$.</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="step-card"><span class="step-number">2</span> <b>Thử thách:</b> Tìm góc ném để đạt tầm xa lớn nhất với $v_0$ cố định.</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="step-card"><span class="step-number">3</span> <b>Soi dữ liệu:</b> Thời gian bay tỉ lệ thuận với vận tốc đứng ban đầu $v_{0y}$.</div>', unsafe_allow_html=True)
 else: 
-    instruct = [
-        "**Mục tiêu:** Kết hợp $v_0$ và Góc để đường dự báo đỏ đi qua tâm rổ.",
-        "**Vật lí:** Quan sát sự biến đổi vận tốc tổng hợp khi bóng bay gần đến đích.",
-        "**Thực hiện:** Nhấn nút để xem nhân vật xanh thực hiện mô phỏng thực tế."
-    ]
-
-# Render hướng dẫn đảm bảo công thức hiển thị đúng
-for i, step in enumerate(instruct):
-    st.markdown(f'<div class="step-card"><span class="step-number">{i+1}</span> {step}</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="step-card"><span class="step-number">1</span> <b>Mục tiêu:</b> Kết hợp $v_0$ và Góc để đường dự báo đỏ đi qua tâm rổ.</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="step-card"><span class="step-number">2</span> <b>Vật lí:</b> Quan sát sự biến đổi vận tốc tổng hợp khi bóng bay gần đến đích.</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="step-card"><span class="step-number">3</span> <b>Thực hiện:</b> Nhấn nút để xem nhân vật xanh thực hiện mô phỏng thực tế.</div>', unsafe_allow_html=True)
 
 # --- 4. TÍNH TOÁN ĐỘNG HỌC ---
 angle_rad = np.radians(angle)
