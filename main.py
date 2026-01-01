@@ -21,7 +21,7 @@ st.markdown("""
 
 st.title("🏀 Phòng Thí Nghiệm Vật Lí AI")
 
-# HIỂN THỊ HẰNG SỐ VẬT LÍ (Tiêu chí IV.3: Tuân thủ đạo đức và pháp lý)
+# HIỂN THỊ HẰNG SỐ VẬT LÍ (Tiêu chí IV.3: Tuân thủ đạo đức khoa học)
 G_CONST = 9.8
 st.caption("🌍 Tham số môi trường: Gia tốc trọng trường g = 9.8 m/s² (Bỏ qua lực cản không khí)")
 
@@ -59,23 +59,23 @@ with st.sidebar.expander("📝 Nhập số liệu thí nghiệm", expanded=True)
         target_x = st.number_input("🚩 Khoảng cách rổ (m)", 1.0, 50.0, 8.0, 0.1)
         target_y = st.number_input("🥅 Chiều cao rổ (m)", 0.5, 5.0, 3.05, 0.05)
 
-# --- 3. HƯỚNG DẪN KHÁM PHÁ (Tiêu chí III.3: Có hướng dẫn rõ ràng) ---
+# --- 3. HƯỚNG DẪN KHÁM PHÁ (VIẾT ĐƠN GIẢN ĐỂ TRÁNH LỖI HIỂN THỊ) ---
 st.markdown("### 📖 Lộ trình khám phá dành cho học sinh")
 
 if selected_mode == MODES[0]:
-    st.markdown('<div class="step-card"><span class="step-number">1</span> <b>Kiểm chứng:</b> Theo dõi vận tốc đứng $v_y$ giảm 9.8 $m/s^2$ sau mỗi giây.</div>', unsafe_allow_html=True)
-    st.markdown('<div class="step-card"><span class="step-number">2</span> <b>Rơi tự do:</b> Chỉnh hướng xuống và $v_0 = 0$. Quan sát sự tăng tốc dưới tác động của $g = 9.8$ $m/s^2$.</div>', unsafe_allow_html=True)
-    st.markdown('<div class="step-card"><span class="step-number">3</span> <b>Tư duy:</b> Tại đỉnh cao nhất, vận tốc đứng $v_y$ có bằng 0 không?</div>', unsafe_allow_html=True)
+    st.markdown('<div class="step-card"><span class="step-number">1</span> <b>Kiểm chứng:</b> Theo dõi vận tốc đứng vy giảm 9.8 m/s² sau mỗi giây.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="step-card"><span class="step-number">2</span> <b>Rơi tự do:</b> Chỉnh hướng xuống và v0 = 0. Quan sát sự tăng tốc dưới tác động của g = 9.8 m/s².</div>', unsafe_allow_html=True)
+    st.markdown('<div class="step-card"><span class="step-number">3</span> <b>Tư duy:</b> Tại đỉnh cao nhất, vận tốc đứng vy có bằng 0 không?</div>', unsafe_allow_html=True)
 elif selected_mode == MODES[1]:
-    st.markdown('<div class="step-card"><span class="step-number">1</span> <b>Đặc điểm:</b> Vận tốc ngang $v_x$ không thay đổi suốt hành trình.</div>', unsafe_allow_html=True)
-    st.markdown('<div class="step-card"><span class="step-number">2</span> <b>Mối liên hệ:</b> Soi bảng thông số để thấy vận tốc đứng $v_y$ tăng đều do gia tốc $g = 9.8$ $m/s^2$.</div>', unsafe_allow_html=True)
-    st.markdown('<div class="step-card"><span class="step-number">3</span> <b>Kết luận:</b> Thời gian rơi chỉ phụ thuộc vào độ cao $h_0$.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="step-card"><span class="step-number">1</span> <b>Đặc điểm:</b> Vận tốc ngang vx không thay đổi suốt hành trình.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="step-card"><span class="step-number">2</span> <b>Mối liên hệ:</b> Soi bảng thông số để thấy vận tốc đứng vy tăng đều do gia tốc g = 9.8 m/s².</div>', unsafe_allow_html=True)
+    st.markdown('<div class="step-card"><span class="step-number">3</span> <b>Kết luận:</b> Thời gian rơi chỉ phụ thuộc vào độ cao h0.</div>', unsafe_allow_html=True)
 elif selected_mode == MODES[2]:
-    st.markdown('<div class="step-card"><span class="step-number">1</span> <b>Phân tích:</b> Vận tốc tại đỉnh chỉ còn thành phần nằm ngang $v_x$.</div>', unsafe_allow_html=True)
-    st.markdown('<div class="step-card"><span class="step-number">2</span> <b>Thử thách:</b> Tìm góc ném để đạt tầm xa lớn nhất với $v_0$ cố định.</div>', unsafe_allow_html=True)
-    st.markdown('<div class="step-card"><span class="step-number">3</span> <b>Soi dữ liệu:</b> Thời gian bay tỉ lệ thuận với vận tốc đứng ban đầu $v_{0y}$.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="step-card"><span class="step-number">1</span> <b>Phân tích:</b> Vận tốc tại đỉnh chỉ còn thành phần nằm ngang vx.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="step-card"><span class="step-number">2</span> <b>Thử thách:</b> Tìm góc ném để đạt tầm xa lớn nhất với v0 cố định.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="step-card"><span class="step-number">3</span> <b>Soi dữ liệu:</b> Thời gian bay tỉ lệ thuận với vận tốc đứng ban đầu v0y.</div>', unsafe_allow_html=True)
 else: 
-    st.markdown('<div class="step-card"><span class="step-number">1</span> <b>Mục tiêu:</b> Kết hợp $v_0$ và Góc để đường dự báo đỏ đi qua tâm rổ.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="step-card"><span class="step-number">1</span> <b>Mục tiêu:</b> Kết hợp v0 và Góc để đường dự báo đỏ đi qua tâm rổ.</div>', unsafe_allow_html=True)
     st.markdown('<div class="step-card"><span class="step-number">2</span> <b>Vật lí:</b> Quan sát sự biến đổi vận tốc tổng hợp khi bóng bay gần đến đích.</div>', unsafe_allow_html=True)
     st.markdown('<div class="step-card"><span class="step-number">3</span> <b>Thực hiện:</b> Nhấn nút để xem nhân vật xanh thực hiện mô phỏng thực tế.</div>', unsafe_allow_html=True)
 
@@ -96,7 +96,7 @@ vx_inst = np.full_like(t_steps, vx0)
 vy_inst = vy0 - G_CONST * t_steps
 v_total = np.sqrt(vx_inst**2 + vy_inst**2)
 
-# --- 5. ĐỒ THỊ (Tiêu chí V.2: Demo và mô phỏng sản phẩm) ---
+# --- 5. ĐỒ THỊ ---
 fig = go.Figure()
 custom_data = np.stack((v_total, t_steps, vx_inst, vy_inst), axis=-1)
 
@@ -137,7 +137,6 @@ fig.update_layout(
     }]
 )
 
-# KHỐI ANIMATION (Đã fix lỗi cú pháp dấu ngoặc)
 fig.frames = [go.Frame(data=[
     go.Scatter(x=x_coords, y=y_coords), 
     go.Scatter(x=x_coords[:i+1], y=y_coords[:i+1]), 
@@ -146,7 +145,6 @@ fig.frames = [go.Frame(data=[
 
 st.plotly_chart(fig, use_container_width=True)
 
-# 6. HIỂU QUẢ TÁC ĐỘNG (Tiêu chí II: Hiệu quả và tác động trong giáo dục)
 st.markdown("---")
 c1, c2, c3 = st.columns(3)
 c1.metric("📏 Tầm xa tối đa", f"{max(x_coords):.2f} m")
