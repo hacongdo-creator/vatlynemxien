@@ -14,7 +14,7 @@ st.markdown("""
     }
     .step-number {
         background-color: #00f2ff; color: #1e2130;
-        padding: 2px 8px; border-radius: 50%; font-weight: bold; margin-right: 5px;
+        padding: 2px 10px; border-radius: 50%; font-weight: bold; margin-right: 10px;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -64,32 +64,34 @@ st.markdown("### 📖 Lộ trình khám phá dành cho học sinh")
 
 if selected_mode == MODES[0]:
     instruct = [
-        f"<b>Kiểm chứng:</b> Theo dõi vận tốc đứng $v_y$ giảm {G_CONST} $m/s^2$ sau mỗi giây.",
-        f"<b>Rơi tự do:</b> Chỉnh hướng xuống và $v_0 = 0$. Quan sát sự tăng tốc dưới tác động của $g = {G_CONST}$ $m/s^2$.",
-        "<b>Tư duy:</b> Tại đỉnh cao nhất, vận tốc đứng $v_y$ có bằng 0 không?"
+        f"**Kiểm chứng:** Theo dõi vận tốc đứng $v_y$ giảm {G_CONST} $m/s^2$ sau mỗi giây.",
+        f"**Rơi tự do:** Chỉnh hướng xuống và $v_0 = 0$. Quan sát sự tăng tốc dưới tác động của $g = {G_CONST}$ $m/s^2$.",
+        "**Tư duy:** Tại đỉnh cao nhất, vận tốc đứng $v_y$ có bằng 0 không?"
     ]
 elif selected_mode == MODES[1]:
     instruct = [
-        "<b>Đặc điểm:</b> Vận tốc ngang $v_x$ không thay đổi suốt hành trình.",
-        f"<b>Mối liên hệ:</b> Soi bảng thông số để thấy vận tốc đứng $v_y$ tăng đều do gia tốc $g = {G_CONST}$ $m/s^2$.",
-        "<b>Kết luận:</b> Thời gian rơi chỉ phụ thuộc vào độ cao $h_0$."
+        "**Đặc điểm:** Vận tốc ngang $v_x$ không thay đổi suốt hành trình.",
+        f"**Mối liên hệ:** Soi bảng thông số để thấy vận tốc đứng $v_y$ tăng đều do gia tốc $g = {G_CONST}$ $m/s^2$.",
+        "**Kết luận:** Thời gian rơi chỉ phụ thuộc vào độ cao $h_0$."
     ]
 elif selected_mode == MODES[2]:
     instruct = [
-        "<b>Phân tích:</b> Vận tốc tại đỉnh chỉ còn thành phần nằm ngang $v_x$.",
-        "<b>Thử thách:</b> Tìm góc ném để đạt tầm xa lớn nhất với $v_0$ cố định.",
-        "<b>Soi dữ liệu:</b> Thời gian bay tỉ lệ thuận với thành phần vận tốc ban đầu phương đứng $v_{0y}$."
+        "**Phân tích:** Vận tốc tại đỉnh chỉ còn thành phần nằm ngang $v_x$.",
+        "**Thử thách:** Tìm góc ném để đạt tầm xa lớn nhất với $v_0$ cố định.",
+        "**Soi dữ liệu:** Thời gian bay tỉ lệ thuận với thành phần vận tốc ban đầu phương đứng $v_{0y}$."
     ]
 else: 
     instruct = [
-        "<b>Mục tiêu:</b> Kết hợp $v_0$ và Góc để đường dự báo đỏ đi qua tâm rổ.",
-        "<b>Vật lí:</b> Quan sát sự biến đổi vận tốc tổng hợp khi bóng bay gần đến đích.",
-        "<b>Thực hiện:</b> Nhấn nút để xem nhân vật xanh thực hiện mô phỏng thực tế."
+        "**Mục tiêu:** Kết hợp $v_0$ và Góc để đường dự báo đỏ đi qua tâm rổ.",
+        "**Vật lí:** Quan sát sự biến đổi vận tốc tổng hợp khi bóng bay gần đến đích.",
+        "**Thực hiện:** Nhấn nút để xem nhân vật xanh thực hiện mô phỏng thực tế."
     ]
 
-st.markdown(f"""<div class="step-card">{"".join([f'<p><span class="step-number">{i+1}</span> {text}</p>' for i, text in enumerate(instruct)])}</div>""", unsafe_allow_html=True)
+# Render hướng dẫn đảm bảo công thức hiển thị đúng
+for i, step in enumerate(instruct):
+    st.markdown(f'<div class="step-card"><span class="step-number">{i+1}</span> {step}</div>', unsafe_allow_html=True)
 
-# --- 4. TÍNH TOÁN ĐỘNG HỌC ĐỒNG BỘ ---
+# --- 4. TÍNH TOÁN ĐỘNG HỌC ---
 angle_rad = np.radians(angle)
 vx0 = v0 * np.cos(angle_rad)
 vy0 = v0 * np.sin(angle_rad)
@@ -147,7 +149,6 @@ fig.update_layout(
     }]
 )
 
-# KHỐI CODE ĐÃ ĐƯỢC SỬA LỖI NGOẶC
 fig.frames = [go.Frame(data=[
     go.Scatter(x=x_coords, y=y_coords), 
     go.Scatter(x=x_coords[:i+1], y=y_coords[:i+1]), 
