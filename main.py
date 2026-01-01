@@ -2,7 +2,7 @@ import streamlit as st
 import numpy as np
 import plotly.graph_objects as go
 
-# 1. CẤU HÌNH TRANG (Giữ nguyên giao diện đã thống nhất)
+# 1. CẤU HÌNH TRANG (Tiêu chí V.1: Hồ sơ rõ ràng )
 st.set_page_config(page_title="Vật Lí AI - Thí nghiệm chuẩn xác", page_icon="🚀", layout="centered")
 
 st.markdown("""
@@ -17,8 +17,8 @@ st.markdown("""
         padding: 2px 10px; border-radius: 50%; font-weight: bold; margin-right: 10px;
     }
     .challenge-card {
-        background-color: #262730; padding: 15px; border-radius: 10px;
-        border: 1px dashed #ff4b4b; margin-top: 10px; color: #ff4b4b;
+        background-color: #1e2130; padding: 15px; border-radius: 10px;
+        border: 2px dashed #ff4b4b; margin-top: 10px;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -27,7 +27,7 @@ st.title("🏀 Phòng Thí Nghiệm Vật Lí AI")
 G_CONST = 9.8
 st.caption("🌍 Tham số môi trường: Gia tốc trọng trường g = 9.8 m/s² (Bỏ qua lực cản không khí)")
 
-# 2. THANH ĐIỀU KHIỂN SIDEBAR (Giữ nguyên 4 chế độ)
+# 2. THANH ĐIỀU KHIỂN SIDEBAR
 st.sidebar.title("⚙️ Cấu hình thí nghiệm")
 MODES = [
     "↕️ 1. Ném theo phương thẳng đứng",
@@ -58,29 +58,30 @@ with st.sidebar.expander("📝 Nhập số liệu thí nghiệm", expanded=True)
         target_x = st.number_input("🚩 Khoảng cách rổ (m)", 1.0, 50.0, 8.0, 0.1)
         target_y = st.number_input("🥅 Chiều cao rổ (m)", 0.5, 5.0, 3.05, 0.05)
 
-# --- 3. LỘ TRÌNH KHÁM PHÁ & THỬ THÁCH (Cập nhật mới bám sát phiếu chấm) ---
-st.markdown("### 📖 Lộ trình khám phá và Thử thách tư duy")
+# --- 3. LỘ TRÌNH KHÁM PHÁ THEO TRÌNH TỰ (Tiêu chí II.2 ) ---
+st.markdown("### 📖 Hướng dẫn khám phá và thực hành")
 
 if selected_mode == MODES[0]:
-    st.markdown('<div class="step-card"><span class="step-number">1</span> <b>Phân tích động học:</b> Quan sát thành phần vận tốc vy thay đổi như thế nào sau mỗi giây? Hãy so sánh độ lớn vy lúc bắt đầu ném và lúc vật trở lại vị trí cũ.</div>', unsafe_allow_html=True)
-    st.markdown('<div class="step-card"><span class="step-number">2</span> <b>Kiểm chứng gia tốc:</b> Soi thông số vy tại t = 1s và t = 2s. Hiệu số vy có đúng bằng 9.8 m/s không? Tại sao?</div>', unsafe_allow_html=True)
-    st.markdown('<div class="challenge-card">🎯 <b>Thử thách Rơi tự do:</b> Chỉnh hướng ném xuống và v0 = 0. Hãy tính toán thời gian rơi từ độ cao 45m (g = 9.8) bằng công thức rồi dùng mô phỏng để kiểm chứng.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="step-card"><span class="step-number">1</span> <b>Khám phá:</b> Thay đổi vận tốc v0 và hướng ném, sau đó quan sát sự thay đổi độ cao cực đại trên đồ thị.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="step-card"><span class="step-number">2</span> <b>Tư duy:</b> Rê chuột vào các điểm trên quỹ đạo để thấy giá trị vận tốc đứng vy thay đổi tuyến tính theo thời gian do gia tốc g.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="challenge-card">🎯 <b>Thử thách:</b> Tìm vận tốc v0 để vật đạt độ cao đúng 20m. Kiểm chứng lại bằng mô phỏng.</div>', unsafe_allow_html=True)
 
 elif selected_mode == MODES[1]:
-    st.markdown('<div class="step-card"><span class="step-number">1</span> <b>Tính độc lập:</b> Quan sát chuyển động. Thành phần vận tốc nào không đổi (vx) và thành phần nào biến đổi (vy)? Điều này chứng minh điều gì về lực tác động?</div>', unsafe_allow_html=True)
-    st.markdown('<div class="step-card"><span class="step-number">2</span> <b>Mối liên hệ:</b> Rê chuột để xem tầm xa x tăng tiến theo quy luật nào với vx?</div>', unsafe_allow_html=True)
-    st.markdown('<div class="challenge-card">🎯 <b>Thử thách Tầm bay xa:</b> Ở độ cao 20m, bạn cần vận tốc đầu v0 bao nhiêu để vật bay xa đúng 30m? Hãy tính toán và thực hiện ném thử.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="step-card"><span class="step-number">1</span> <b>Khám phá:</b> Thực hiện ném ngang từ các độ cao khác nhau h0 và quan sát hình dạng quỹ đạo Parabol.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="step-card"><span class="step-number">2</span> <b>Tư duy:</b> Sử dụng bảng soi thông số để nhận thấy vận tốc ngang vx luôn bằng v0 tại mọi thời điểm.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="challenge-card">🎯 <b>Thử thách:</b> Chỉnh h0 = 20m, hãy xác định v0 để vật chạm đất tại vị trí cách chân tháp đúng 20m.</div>', unsafe_allow_html=True)
 
 elif selected_mode == MODES[2]:
-    st.markdown('<div class="step-card"><span class="step-number">1</span> <b>Phân tích đỉnh cao:</b> Soi bảng thông số tại điểm cao nhất của quỹ đạo. Tại sao vy = 0 nhưng vận tốc tổng hợp v vẫn khác 0?</div>', unsafe_allow_html=True)
-    st.markdown('<div class="step-card"><span class="step-number">2</span> <b>Tính đối xứng:</b> So sánh thời gian từ lúc ném đến đỉnh và từ đỉnh đến khi chạm đất. Quỹ đạo ném xiên có tính chất gì đặc biệt?</div>', unsafe_allow_html=True)
-    st.markdown('<div class="challenge-card">🎯 <b>Thử thách Góc ném tối ưu:</b> Với v0 không đổi, hãy tìm góc ném để vật đạt tầm xa lớn nhất. Thử với các góc 30, 45, 60 độ để rút ra kết luận.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="step-card"><span class="step-number">1</span> <b>Khám phá:</b> Thử ném vật với các góc alpha khác nhau (15, 30, 45, 60, 75 độ) để thấy sự biến đổi tầm xa.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="step-card"><span class="step-number">2</span> <b>Tư duy:</b> Phân tích dữ liệu tại đỉnh quỹ đạo để thấy tại đó vy = 0 nhưng vận tốc tổng hợp vẫn bằng vx.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="challenge-card">🎯 <b>Thử thách:</b> Chứng minh bằng mô phỏng rằng hai góc ném có tổng bằng 90 độ sẽ cho cùng một tầm xa (với cùng v0).</div>', unsafe_allow_html=True)
 
-else: # Ném rổ (Mục tiêu)
-    st.markdown('<div class="step-card"><span class="step-number">1</span> <b>Vận dụng:</b> Phối hợp v0 và góc alpha để đường dự báo đi qua tâm rổ. Chú ý điểm rơi của bóng khi gần tới rổ.</div>', unsafe_allow_html=True)
-    st.markdown('<div class="challenge-card">🎯 <b>Thử thách Nhà vô địch:</b> Với khoảng cách rổ 8m, hãy tìm 2 phương án ném khác nhau (v0, góc) để bóng vẫn trúng đích. Một phương án ném "căng" và một phương án ném "vồng".</div>', unsafe_allow_html=True)
+else: # Ném rổ
+    st.markdown('<div class="step-card"><span class="step-number">1</span> <b>Khám phá:</b> Tự do điều chỉnh các tham số để đường nét đứt đi qua tâm rổ mục tiêu.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="step-card"><span class="step-number">2</span> <b>Tư duy:</b> Quan sát vận tốc bóng khi bay vào rổ để hiểu về sự phối hợp giữa hướng ném và lực ném.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="challenge-card">🎯 <b>Thử thách:</b> Tìm một bộ thông số v0 và góc để bóng đi vào rổ với quỹ đạo cao nhất có thể.</div>', unsafe_allow_html=True)
 
-# --- 4. TÍNH TOÁN VÀ ĐỒ THỊ (Giữ nguyên logic chuẩn xác) ---
+# --- 4. TÍNH TOÁN VÀ ĐỒ THỊ (GIỮ NGUYÊN NÚT CHẠY VÀ LOGIC) ---
 angle_rad = np.radians(angle)
 vx0 = v0 * np.cos(angle_rad)
 vy0 = v0 * np.sin(angle_rad)
@@ -107,7 +108,6 @@ fig.add_trace(go.Scatter(
 fig.add_trace(go.Scatter(x=[x_coords[0]], y=[y_coords[0]], mode='lines', name='Thực tế', line=dict(color='#00f2ff', width=4), hoverinfo='skip'))
 fig.add_trace(go.Scatter(x=[x_coords[0]], y=[y_coords[0]], mode='markers', name='Bóng', marker=dict(color='#FF6600', size=16), hoverinfo='skip'))
 
-# CHỈ VẼ NGƯỜI VÀ RỔ Ở CHẾ ĐỘ NÉM RỔ (Giữ nguyên)
 if selected_mode == MODES[3]:
     p_color = "#00f2ff"
     fig.add_shape(type="line", x0=0, y0=max(0, h0-1.5), x1=0, y1=h0-0.5, line=dict(color=p_color, width=6))
@@ -116,8 +116,10 @@ if selected_mode == MODES[3]:
     fig.add_shape(type="line", x0=target_x, y0=0, x1=target_x, y1=target_y, line=dict(color="#555", width=3))
     fig.add_trace(go.Scatter(x=[target_x], y=[target_y], mode='markers', marker=dict(size=20, color='red', symbol='circle-open')))
 
-fig.update_layout(xaxis=dict(range=[-1, max(x_coords) + 5], title="Tầm xa (m)"), yaxis=dict(range=[-0.5, max(y_coords) + 5], title="Độ cao (m)"), template="plotly_dark", height=500,
-                  updatemenus=[{"type": "buttons", "buttons": [{"label": "🚀 CHẠY THÍ NGHIỆM", "method": "animate", "args": [None, {"frame": {"duration": 20, "redraw": True}}]}]}])
+fig.update_layout(xaxis=dict(range=[-1, max(x_coords) + 5], title="Tầm xa (m)"), yaxis=dict(range=[-0.5, max(y_coords) + 5], title="Độ cao (m)"), template="plotly_dark", height=500, margin=dict(l=20, r=20, t=20, b=20),
+                  updatemenus=[{"type": "buttons", "showactive": False, "x": 0.5, "y": -0.15, "xanchor": "center",
+                                "buttons": [{"label": "🚀 BẮT ĐẦU THÍ NGHIỆM", "method": "animate", "args": [None, {"frame": {"duration": 16, "redraw": True}, "fromcurrent": True}]}]}])
+
 fig.frames = [go.Frame(data=[go.Scatter(x=x_coords, y=y_coords), go.Scatter(x=x_coords[:i+1], y=y_coords[:i+1]), go.Scatter(x=[x_coords[i]], y=[y_coords[i]])]) for i in range(len(t_steps))]
 st.plotly_chart(fig, use_container_width=True)
 
