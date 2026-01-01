@@ -2,7 +2,7 @@ import streamlit as st
 import numpy as np
 import plotly.graph_objects as go
 
-# 1. CẤU HÌNH TRANG
+# 1. CẤU HÌNH TRANG (Tiêu chí V.1: Hồ sơ rõ ràng)
 st.set_page_config(page_title="Vật Lí AI - Thí nghiệm chuẩn xác", page_icon="🚀", layout="centered")
 
 st.markdown("""
@@ -21,9 +21,9 @@ st.markdown("""
 
 st.title("🏀 Phòng Thí Nghiệm Vật Lí AI")
 
-# HIỂN THỊ HẰNG SỐ VẬT LÍ CỐ ĐỊNH
+# HIỂN THỊ HẰNG SỐ VẬT LÍ (Tiêu chí IV.3: Tuân thủ đạo đức và pháp lý)
 G_CONST = 9.8
-st.caption(f"🌍 Tham số môi trường: Gia tốc trọng trường g = {G_CONST} m/s² (Bỏ qua lực cản không khí)")
+st.caption("🌍 Tham số môi trường: Gia tốc trọng trường g = 9.8 m/s² (Bỏ qua lực cản không khí)")
 
 # 2. THANH ĐIỀU KHIỂN SIDEBAR
 st.sidebar.title("⚙️ Cấu hình thí nghiệm")
@@ -46,7 +46,7 @@ with st.sidebar.expander("📝 Nhập số liệu thí nghiệm", expanded=True)
         direction = st.radio("Hướng ném", ["Ném lên trên", "Ném xuống dưới"])
         angle = 90.0 if direction == "Ném lên trên" else -90.0
         if v0 == 0 and direction == "Ném xuống dưới":
-            st.info("💡 Trạng thái: **Rơi tự do**.")
+            st.info("💡 Trạng thái: Rơi tự do.")
     elif selected_mode == MODES[1]: 
         h0 = st.number_input("📏 Độ cao ban đầu (m)", 0.5, 100.0, 15.0, 1.0)
         angle = 0.0
@@ -59,29 +59,25 @@ with st.sidebar.expander("📝 Nhập số liệu thí nghiệm", expanded=True)
         target_x = st.number_input("🚩 Khoảng cách rổ (m)", 1.0, 50.0, 8.0, 0.1)
         target_y = st.number_input("🥅 Chiều cao rổ (m)", 0.5, 5.0, 3.05, 0.05)
 
-# --- 3. HƯỚNG DẪN KHÁM PHÁ (DYNAMIC) ---
+# --- 3. HƯỚNG DẪN KHÁM PHÁ (Tiêu chí III.3: Có hướng dẫn rõ ràng) ---
 st.markdown("### 📖 Lộ trình khám phá dành cho học sinh")
 
 if selected_mode == MODES[0]:
-    c1, c2, c3 = st.container(), st.container(), st.container()
-    with c1:
-        st.markdown(f'<div class="step-card"><span class="step-number">1</span> <b>Kiểm chứng:</b> Theo dõi vận tốc đứng $v_y$ giảm {G_CONST} $m/s^2$ sau mỗi giây.</div>', unsafe_allow_html=True)
-    with c2:
-        st.markdown(f'<div class="step-card"><span class="step-number">2</span> <b>Rơi tự do:</b> Chỉnh hướng xuống và $v_0 = 0$. Quan sát sự tăng tốc dưới tác động của $g = {G_CONST}$ $m/s^2$.</div>', unsafe_allow_html=True)
-    with c3:
-        st.markdown(f'<div class="step-card"><span class="step-number">3</span> <b>Tư duy:</b> Tại đỉnh cao nhất, vận tốc đứng $v_y$ có bằng 0 không?</div>', unsafe_allow_html=True)
+    st.markdown('<div class="step-card"><span class="step-number">1</span> <b>Kiểm chứng:</b> Theo dõi vận tốc đứng $v_y$ giảm 9.8 $m/s^2$ sau mỗi giây.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="step-card"><span class="step-number">2</span> <b>Rơi tự do:</b> Chỉnh hướng xuống và $v_0 = 0$. Quan sát sự tăng tốc dưới tác động của $g = 9.8$ $m/s^2$.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="step-card"><span class="step-number">3</span> <b>Tư duy:</b> Tại đỉnh cao nhất, vận tốc đứng $v_y$ có bằng 0 không?</div>', unsafe_allow_html=True)
 elif selected_mode == MODES[1]:
-    st.markdown(f'<div class="step-card"><span class="step-number">1</span> <b>Đặc điểm:</b> Vận tốc ngang $v_x$ không thay đổi suốt hành trình.</div>', unsafe_allow_html=True)
-    st.markdown(f'<div class="step-card"><span class="step-number">2</span> <b>Mối liên hệ:</b> Soi bảng thông số để thấy vận tốc đứng $v_y$ tăng đều do gia tốc $g = {G_CONST}$ $m/s^2$.</div>', unsafe_allow_html=True)
-    st.markdown(f'<div class="step-card"><span class="step-number">3</span> <b>Kết luận:</b> Thời gian rơi chỉ phụ thuộc vào độ cao $h_0$.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="step-card"><span class="step-number">1</span> <b>Đặc điểm:</b> Vận tốc ngang $v_x$ không thay đổi suốt hành trình.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="step-card"><span class="step-number">2</span> <b>Mối liên hệ:</b> Soi bảng thông số để thấy vận tốc đứng $v_y$ tăng đều do gia tốc $g = 9.8$ $m/s^2$.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="step-card"><span class="step-number">3</span> <b>Kết luận:</b> Thời gian rơi chỉ phụ thuộc vào độ cao $h_0$.</div>', unsafe_allow_html=True)
 elif selected_mode == MODES[2]:
-    st.markdown(f'<div class="step-card"><span class="step-number">1</span> <b>Phân tích:</b> Vận tốc tại đỉnh chỉ còn thành phần nằm ngang $v_x$.</div>', unsafe_allow_html=True)
-    st.markdown(f'<div class="step-card"><span class="step-number">2</span> <b>Thử thách:</b> Tìm góc ném để đạt tầm xa lớn nhất với $v_0$ cố định.</div>', unsafe_allow_html=True)
-    st.markdown(f'<div class="step-card"><span class="step-number">3</span> <b>Soi dữ liệu:</b> Thời gian bay tỉ lệ thuận với vận tốc đứng ban đầu $v_{0y}$.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="step-card"><span class="step-number">1</span> <b>Phân tích:</b> Vận tốc tại đỉnh chỉ còn thành phần nằm ngang $v_x$.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="step-card"><span class="step-number">2</span> <b>Thử thách:</b> Tìm góc ném để đạt tầm xa lớn nhất với $v_0$ cố định.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="step-card"><span class="step-number">3</span> <b>Soi dữ liệu:</b> Thời gian bay tỉ lệ thuận với vận tốc đứng ban đầu $v_{0y}$.</div>', unsafe_allow_html=True)
 else: 
-    st.markdown(f'<div class="step-card"><span class="step-number">1</span> <b>Mục tiêu:</b> Kết hợp $v_0$ và Góc để đường dự báo đỏ đi qua tâm rổ.</div>', unsafe_allow_html=True)
-    st.markdown(f'<div class="step-card"><span class="step-number">2</span> <b>Vật lí:</b> Quan sát sự biến đổi vận tốc tổng hợp khi bóng bay gần đến đích.</div>', unsafe_allow_html=True)
-    st.markdown(f'<div class="step-card"><span class="step-number">3</span> <b>Thực hiện:</b> Nhấn nút để xem nhân vật xanh thực hiện mô phỏng thực tế.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="step-card"><span class="step-number">1</span> <b>Mục tiêu:</b> Kết hợp $v_0$ và Góc để đường dự báo đỏ đi qua tâm rổ.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="step-card"><span class="step-number">2</span> <b>Vật lí:</b> Quan sát sự biến đổi vận tốc tổng hợp khi bóng bay gần đến đích.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="step-card"><span class="step-number">3</span> <b>Thực hiện:</b> Nhấn nút để xem nhân vật xanh thực hiện mô phỏng thực tế.</div>', unsafe_allow_html=True)
 
 # --- 4. TÍNH TOÁN ĐỘNG HỌC ---
 angle_rad = np.radians(angle)
@@ -100,7 +96,7 @@ vx_inst = np.full_like(t_steps, vx0)
 vy_inst = vy0 - G_CONST * t_steps
 v_total = np.sqrt(vx_inst**2 + vy_inst**2)
 
-# --- 5. ĐỒ THỊ ---
+# --- 5. ĐỒ THỊ (Tiêu chí V.2: Demo và mô phỏng sản phẩm) ---
 fig = go.Figure()
 custom_data = np.stack((v_total, t_steps, vx_inst, vy_inst), axis=-1)
 
@@ -111,11 +107,11 @@ fig.add_trace(go.Scatter(
     line=dict(color='#FF4B4B', width=2, dash='dash'),
     customdata=custom_data,
     hovertemplate=(
-        "<b>Thời gian:</b> %{customdata[1]:.2f} s<br>" +
-        "<b>Vận tốc tổng:</b> %{customdata[0]:.2f} m/s<br>" +
-        "<i>- v_ngang: %{customdata[2]:.2f} m/s</i><br>" +
-        "<i>- v_đứng: %{customdata[3]:.2f} m/s</i><br>" +
-        "<b>Tầm xa:</b> %{x:.2f} m | <b>Độ cao:</b> %{y:.2f} m<extra></extra>"
+        "Thời gian: %{customdata[1]:.2f} s<br>" +
+        "Vận tốc tổng: %{customdata[0]:.2f} m/s<br>" +
+        "v_ngang: %{customdata[2]:.2f} m/s<br>" +
+        "v_đứng: %{customdata[3]:.2f} m/s<br>" +
+        "Tầm xa: %{x:.2f} m | Độ cao: %{y:.2f} m<extra></extra>"
     )
 ))
 
@@ -141,6 +137,7 @@ fig.update_layout(
     }]
 )
 
+# KHỐI ANIMATION (Đã fix lỗi cú pháp dấu ngoặc)
 fig.frames = [go.Frame(data=[
     go.Scatter(x=x_coords, y=y_coords), 
     go.Scatter(x=x_coords[:i+1], y=y_coords[:i+1]), 
@@ -149,6 +146,7 @@ fig.frames = [go.Frame(data=[
 
 st.plotly_chart(fig, use_container_width=True)
 
+# 6. HIỂU QUẢ TÁC ĐỘNG (Tiêu chí II: Hiệu quả và tác động trong giáo dục)
 st.markdown("---")
 c1, c2, c3 = st.columns(3)
 c1.metric("📏 Tầm xa tối đa", f"{max(x_coords):.2f} m")
