@@ -59,7 +59,7 @@ with st.sidebar.expander("📝 Nhập số liệu thí nghiệm", expanded=True)
         target_x = st.number_input("🚩 Khoảng cách rổ (m)", 1.0, 50.0, 8.0, 0.1)
         target_y = st.number_input("🥅 Chiều cao rổ (m)", 0.5, 5.0, 3.05, 0.05)
 
-# --- 3. HƯỚNG DẪN KHÁM PHÁ (DYNAMIC) - ĐÃ SỬA LỖI CÔNG THỨC ---
+# --- 3. HƯỚNG DẪN KHÁM PHÁ (DYNAMIC) ---
 st.markdown("### 📖 Lộ trình khám phá dành cho học sinh")
 
 if selected_mode == MODES[0]:
@@ -147,7 +147,12 @@ fig.update_layout(
     }]
 )
 
-fig.frames = [go.Frame(data=[go.Scatter(x=x_coords, y=y_coords), go.Scatter(x=x_coords[:i+1], y=y_coords[:i+1]), go.Scatter(x=[x_coords[i]], y=y_coords[i]])]) for i in range(len(t_steps))]
+# KHỐI CODE ĐÃ ĐƯỢC SỬA LỖI NGOẶC
+fig.frames = [go.Frame(data=[
+    go.Scatter(x=x_coords, y=y_coords), 
+    go.Scatter(x=x_coords[:i+1], y=y_coords[:i+1]), 
+    go.Scatter(x=[x_coords[i]], y=[y_coords[i]])
+]) for i in range(len(t_steps))]
 
 st.plotly_chart(fig, use_container_width=True)
 
